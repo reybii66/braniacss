@@ -30,6 +30,7 @@ import {
 
 import { Logo } from "@/components/icons";
 import  { useRouter } from "next/navigation";
+import ModSign from "@/app/signmodal/signmodal";
 
 export const Navbar = () => {
 	const router=useRouter();
@@ -100,13 +101,7 @@ export const Navbar = () => {
 				</NavbarItem>
 				
 				<NavbarItem className="hidden md:flex gap-6">
-				<Button
-        						className="text-sm font-normal text-default-600 dark:bg-slate-800 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
-								variant="flat"
-								onClick={() => router.push('/signmodal')}
-					>
-						SignIn
-					</Button>
+			<ModSign/>
 					<Button
         					className="text-sm font-normal text-default-600 dark:bg-slate-800 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
 							

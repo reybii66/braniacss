@@ -1,16 +1,40 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter} from "@nextui-org/modal";
 import {useDisclosure, Button,Input, Link} from '@nextui-org/react';
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import ModalSign from "../signmodal/page";
-
-
+import axios from 'axios';
 export default function Register() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  // const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const router=useRouter();
+    const [data,setData]=useState({
+      username:"",
+      role:"",
+      email:"",
+      password:"",
+  })
+  
+
+  const handleChange = (e:any)=>{
+    setData((prev)=>({...prev, [e.target.name]: e.target.value}));
+  } ;
+  const handleClick = async (e:any) =>{
+    console.log("entered")
+    e.preventDefault()
+    try{
+      console.log("data")
+      await axios.post("http://localhost:9900/user", data)
+      alert("registered successfully")
+      // router.push("/login")
+    } catch(err){
+      console.log(err)
+    }
+    
+  }  
+  console.log(data);
   return (
     
     <>
@@ -87,7 +111,6 @@ export default function Register() {
                 <form>
                   <div className="mb-8">
                     <label
-                      htmlFor="name"
                       className="mb-3 block text-sm text-dark dark:text-white"
                     >
                       {" "}
@@ -95,30 +118,48 @@ export default function Register() {
                     </label>
                     <input
                       type="text"
-                      name="name"
+                      name="username"
                       placeholder="Enter your full name"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      onChange={handleChange}
                     />
                   </div>
+                  {/* DateOfBirth */}
+
+                  {/* <div className="mb-8">
+                    <label
+                      htmlFor="DateOfBirth"
+                      className="mb-3 block text-sm text-dark dark:text-white"
+                    >
+                      {" "}
+                      Your DOB{" "}
+                    </label>
+                    <input
+                      type="date"
+                      name="dob"
+                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                    />
+                  </div> */}
                   <div className="mb-8">
                     <label
-                      htmlFor="role"
                       className="mb-3 block text-sm text-dark dark:text-white"
                     >
                       {" "}
                       Your Role{" "}
                     </label>
-                    <input
-                      type="radio"
-                      name="role"
-                      
-                      placeholder="Enter your Password"
+                    <select
+                      name="role"                       
+                      placeholder="Your Role"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
-                    />
+                      onChange={handleChange}
+                    >
+                      <option value="admin">Admin</option>
+                      <option value="Teacher">Teacher</option>
+                      <option value="student">Student</option>
+                      </select>
                   </div>
                   <div className="mb-8">
                     <label
-                      htmlFor="email"
                       className="mb-3 block text-sm text-dark dark:text-white"
                     >
                       {" "}
@@ -129,11 +170,11 @@ export default function Register() {
                       name="email"
                       placeholder="Enter your Email"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="mb-8">
                     <label
-                      htmlFor="password"
                       className="mb-3 block text-sm text-dark dark:text-white"
                     >
                       {" "}
@@ -144,18 +185,19 @@ export default function Register() {
                       name="password"
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      onChange={handleChange}
                     />
                   </div>
-                  <div className="mb-8 flex">
+                  {/* <div className="mb-8 flex">
                     <label
-                      htmlFor="checkboxLabel"
                       className="flex cursor-pointer select-none text-sm font-medium text-body-color"
-                    >
-                      <div className="relative">
+                    > */}
+                      {/* <div className="relative">
                         <input
                           type="checkbox"
                           id="checkboxLabel"
                           className="sr-only"
+                          
                         />
                         <div className="box mr-4 mt-1 flex h-5 w-5 items-center justify-center rounded border border-body-color border-opacity-20 dark:border-white dark:border-opacity-10">
                           <span className="opacity-0">
@@ -175,8 +217,8 @@ export default function Register() {
                             </svg>
                           </span>
                         </div>
-                      </div>
-                      <span>
+                      </div> */}
+                      {/* <span>
                         By creating account means you agree to the
                         <a href="#0" className="text-primary hover:underline">
                           {" "}
@@ -187,11 +229,13 @@ export default function Register() {
                           {" "}
                           Privacy Policy{" "}
                         </a>
-                      </span>
-                    </label>
-                  </div>
+                      </span> */}
+                    {/* </label>
+                  </div> */}
                   <div className="mb-6">
-                    <button  className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90" >
+                    <button  className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90" 
+                    onClick={handleClick}
+                    >
                       Sign up
                     </button>
                   </div>
@@ -199,7 +243,9 @@ export default function Register() {
                 <p className="text-center text-base font-medium text-body-color">
                   Already using Startup?{" "}
                   {/* <ModalSign/> */}
-                  <button className="radius:full text-primary hover:underline" onClick={() => router.push('/')}>Sign in</button>
+                  <button className="radius:full text-primary hover:underline" 
+                  
+                  >Sign in</button>
                   {/* <Link href="/signmodal/page" className=" text-primary hover:underline">
                     Sign in
                   </Link> */}

@@ -12,7 +12,7 @@ export default function ModSign() {
   return (
     
     <>
-      <Button className="radius-full" onPress={onOpen} >Sign In</Button>
+      <Button className="rounded-full" onPress={onOpen} >Sign In</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent className="flex items-center justify-center ">
           {(onClose) => (
