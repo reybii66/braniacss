@@ -33,8 +33,8 @@ const Settings = () => {
                       >
                         Full Name
                       </label>
-                      <div className="relative">
-                        <span className="absolute left-4.5 top-4">
+                      <div className="">
+                        <span className="absolute left-4.5 top-4 fixed">
                           <svg
                             className="fill-current"
                             width="20"
@@ -59,13 +59,14 @@ const Settings = () => {
                             </g>
                           </svg>
                         </span>
+                        
                         <input
                           className="w-full rounded border border-stroke  py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                           type="text"
                           name="fullName"
                           id="fullName"
                           placeholder="FullName"
-                          defaultValue="Devid Jhon"
+                          defaultValue="   Devid Jhon"
                         />
                       </div>
                     </div>

@@ -1,12 +1,29 @@
+"use client"
 import CardDataStats from "@/components/CardDataStats";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function userDash(){
+  const [username, setName] = useState('')
+  const [message, setMessage] = useState('')
+  // gettingStudentName
+  useEffect(() => {
+    console.log("entered in setMessage")
+    axios.get('http://localhost:9900/token').then(res => {
+      if (res.data.Status === "Success") {
+        setName(res.data.name)
+      } else {
+        setMessage(res.data.Message)
+      }
+    })
+  }, [])
+
     return(
         <>
             <h1>USERNAME</h1>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
 
-            <CardDataStats title="Name" name="Reybin" rate="21" levelUp>
+            <CardDataStats title="Name" name={username} rate="21" levelUp>
             {/* <svg
             className="fill-primary dark:fill-white"
             width="22"

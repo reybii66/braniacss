@@ -29,11 +29,11 @@ import {
 } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
-import  { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ModSign from "@/app/signmodal/signmodal";
 
 export const Navbar = () => {
-	const router=useRouter();
+	const router = useRouter();
 	const searchInput = (
 
 		<Input
@@ -99,13 +99,19 @@ export const Navbar = () => {
 					</Link> */}
 					<ThemeSwitch />
 				</NavbarItem>
-				
+
 				<NavbarItem className="hidden md:flex gap-6">
-			<ModSign/>
 					<Button
-        					className="text-sm font-normal text-default-600 dark:bg-slate-800 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
-							
-							onClick={() => router.push('/register')}
+						className="text-sm font-normal text-default-600 dark:bg-slate-800 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+
+						onClick={() => router.push('/signmodal')}
+					>
+						SignIn
+					</Button>
+					<Button
+						className="text-sm font-normal text-default-600 dark:bg-slate-800 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+
+						onClick={() => router.push('/register')}
 					>
 						SignUp
 					</Button>
@@ -130,8 +136,8 @@ export const Navbar = () => {
 									index === 2
 										? "primary"
 										: index === siteConfig.navMenuItems.length - 1
-										? "danger"
-										: "foreground"
+											? "danger"
+											: "foreground"
 								}
 								href="#"
 								size="lg"

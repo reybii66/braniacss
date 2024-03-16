@@ -10,10 +10,19 @@ import {
 } from '@livekit/components-react';
 import { useEffect, useState } from 'react';
 import { Track } from 'livekit-client';
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
   // TODO: get user input for room and name
-
+  const params = useSearchParams();
+  useEffect(()=>{
+    const room = params.get("room");
+    const name = params.get("name");
+    if(room && name){
+      setRoom(room);
+      setName(name);
+    }
+  })
   const [room, setRoom] = useState<string>();
   const [name,setName] = useState<string>();
   // const room = "quickstart-room";
@@ -75,7 +84,9 @@ export default function Page() {
       value={name}
       onChange={(e)=> setName(e.target.value)} />
       </div>
-      <button type='submit'>Join</button>
+      <center><button 
+        className="bg-warning-300 dark:bg-warning-foreground justify-center"
+        type='submit'>Join</button></center>
       </form>
     </>
     )
@@ -93,7 +104,7 @@ export default function Page() {
       style={{ height: '100dvh' }}
     >
       {/* Your custom component with basic video conferencing functionality. */}
-      <MyVideoConference/>
+      <VideoConference/>
             {/* The RoomAudioRenderer takes care of room-wide audio for you. */}
       {/* <RoomAudioRenderer />  */}
       {/* <RoomAudioRenderer/>
@@ -101,7 +112,7 @@ export default function Page() {
        <RoomAudioRenderer/>
       {/* Controls for the user to start/stop audio, video, and screen 
       share tracks and to leave the room. */}
-      <ControlBar/>
+      {/* <ControlBar/> */}
     </LiveKitRoom>
   );
 }

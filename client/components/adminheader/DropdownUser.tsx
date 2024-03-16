@@ -1,8 +1,25 @@
+"use client"
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
 
 const DropdownUser = () => {
+  const [adminname, setName] = useState('')
+  const [message, setMessage] = useState('')
+  // gettingAdminName
+  useEffect(() => {
+    console.log("entered in setMessage")
+    axios.get('http://localhost:9900/admintoken').then(res => {
+      if (res.data.Status === "Success") {
+        setName(res.data.name)
+      } else {
+        setMessage(res.data.Message)
+      }
+    })
+  }, [])
+
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -44,9 +61,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium dark:bg-slate-800 text-black dark:text-white">
-            Thomas Anree
+            {adminname}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          {/* <span className="block text-xs">Student</span> */}
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -84,7 +101,7 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
+        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white dark:bg-gray-700 dark:text-white shadow-default dark:border-strokedark dark:bg-boxdark ${
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
