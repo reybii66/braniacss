@@ -2,6 +2,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button} from "@nextui-org/react";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 // import { string } from "zod";
 
 export default function AdminDash(){
@@ -30,6 +31,7 @@ export default function AdminDash(){
     }
     return(
         <>
+        <Breadcrumb pageName= "AdminDash"/>   
         <h1>This is admin dash</h1>
         
         </>

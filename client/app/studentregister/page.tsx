@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 // import { Navbar, NavbarItem } from "@nextui-org/navbar";
 import axios from "axios";
 import { Navbar } from "@/components/navbar";
-
 export default function studentRegister(){
     const router=useRouter();
     const [data,setData]=useState({
@@ -21,6 +20,7 @@ export default function studentRegister(){
   const handleChange = (e:any)=>{
     setData((prev)=>({...prev, [e.target.name]: e.target.value}));
   } ;
+
   const handleClick = async (e:any) =>{
     console.log("entered")
     e.preventDefault()
@@ -28,7 +28,7 @@ export default function studentRegister(){
       // console.log("data")
       await axios.post("http://localhost:9900/studentregister",data)
       alert("registered successfully")
-      router.push("/")
+      router.push("/signmodal")
     } catch(err){
       console.log(err)
     }

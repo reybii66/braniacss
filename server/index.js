@@ -6,7 +6,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import jwt, { decode } from "jsonwebtoken"
 
-
+import multer from 'multer';
 
 const app = express()
 app.use(cors({
@@ -21,7 +21,7 @@ app.use(cookieParser());
 //      resave: false,
 //      saveUninitialized: false,
 //      cookie:{
-//         secure:false,  // set this to true if using
+//         secure:tfalse,  // set this to true if using
 //         maxAge: 1000 * 60 * 60 * 24   // expires in 24 hours    
 //      }
 // }));
@@ -44,37 +44,27 @@ app.get("/", (req, res) => {
 })
 
 
-app.use(express.json())
-app.use(cors(
-    {
-        origin: ["http://localhost:3000"],
-        methods: ["POST, GET", "DELETE"],
-        credentials: true
+// StudentEmail Token
+const getStudentEmail = (req,res,next) =>{
+    const tokenEmail = req.cookies.studentemail;
+
+    if(!tokenEmail){
+        return res.json({Message: "we need token please. Login now"})
+    } else {
+        jwt.verify(tokenEmail,"our-jsonwebtokenEmail- secrete-key",(err,decode)=>{
+            if(err){
+
+                return res.json({Message: "Authentication error."})
+            } else {
+                req.email = decode.email;
+                next();
+            }
+        })
     }
-));
-
-
-// // StudentEmail Token
-// const getStudentEmail = (req,res,next) =>{
-//     const tokenEmail = req.cookies.userEmail;
-
-//     if(!tokenEmail){
-//         return res.json({Message: "we need token please. Login now"})
-//     } else {
-//         jwt.verify(tokenEmail,"our-jsonwebtokenEmail- secrete-key",(err,decode)=>{
-//             if(err){
-
-//                 return res.json({Message: "Authentication error."})
-//             } else {
-//                 req.email = decode.email;
-//                 next();
-//             }
-//         })
-//     }
-// }
-// app.get('/studentEmail',getStudentEmail,(req,res)=>{
-//     return res.json({Status: "Success",studentemail: req.email})
-// })
+}
+app.get('/studentEmail',getStudentEmail,(req,res)=>{
+    return res.json({Status: "Success",studentemail: req.email})
+})
 
 //  studentname token
 const getStudentName = (req, res, next) => {
@@ -303,7 +293,7 @@ app.post("/teacherregister", (req, res) => {
 
 //  teachername token
 const getTeacherName = (req, res, next) => {
-    const token = req.cookies.teachername;
+    const token = req.cookies.TtokenName;
 
     if (!token) {
         return res.json({ Message: "we need token please. Login now" })
@@ -330,11 +320,13 @@ app.post("/teacherlogin", (req, res) => {
     const q = "SELECT * FROM teacher where email=(?)"
     const val = req.body.email
     const pas = req.body.password
-    // console.log(val)
-    // console.log(pas)
+    console.log(val)
+    console.log(pas)
     db.query(q, val, (err, data) => {
         const dbpass = (data[0].password)
         const name = (data[0].name)
+        const age = (data[0].age)
+        console.log(name)
         console.log(dbpass)
         if (err) {
             // return res.json("Cannot select data from table")
@@ -342,13 +334,25 @@ app.post("/teacherlogin", (req, res) => {
         }
         else {
 
-            const Teachertoken = jwt.sign({ val }, "our-jsonwebtoken- secrete-key")
-            const Teachername = jwt.sign({ name }, "our-jsonwebtoken- secrete-key")
+            const TeacherEmail = jwt.sign({ val}, "our-jsonwebtoken- secrete-key")
+            const TeacherName = jwt.sign({ name }, "our-jsonwebtoken- secrete-key")
+            // const TeacherAge = jwt.sign({ age }, "our-jsonwebtoken- secrete-key")
             // const tokenEmail = jwt.sign({email},"our-jsonwebtokenEmail- secrete-key")
+            // const Teacher = jwt.sign({ email:val,name:name,age:age}, "our-jsonwebtoken- secrete-key")
+            res.cookie("Ttoken",TeacherEmail)
+            res.cookie("TtokenName",TeacherName)
+            
             // const tokenPass = jwt.sign({dbpass},"our-jsonwebtokenTPassword- secrete-key")
-            res.cookie('teacheremail', Teachertoken)
-            res.cookie('teachername', Teachername)
+
+            // res.cookie('teacheremail',{temail: TeacherEmail,tname:TeacherName})
+            // res.cookie('teachername', Teachername)
             // res.json("Can select data from table")
+
+            // res.cookie("TtokenEmail",TeacherEmail)
+            // res.cookie("TtokenName",TeacherName)
+            // res.cookie("TtokenAge",TeacherAge)
+
+
             if (dbpass === pas) {
                 return res.json("Success")
             } else {
@@ -444,12 +448,24 @@ app.post("/schedulemeet", (req, res) => {
     })
 })
 
+
+
+
 // Teacher schedule
 app.get("/showScheduleteacher", (req, res) => {
-    console.log("entered to showSchedule")
+    // console.log("entered to showSchedule")
+
+    const Etoken = req.cookies.Ttoken;
+    // const Ntoken = req.cookies.TtokenName;
+    // const Atoken = req.cookies.TtokenAge;
+    // console.log("Email",Etoken);
+    // console.log("NAme",Ntoken);
+    // console.log("age",Atoken);
     const token = req.cookies.teacheremail;
-    console.log(token);
-    jwt.verify(token, "our-jsonwebtoken- secrete-key", (err, decode) => {
+
+    console.log("new token i",token)
+
+    jwt.verify(Etoken, "our-jsonwebtoken- secrete-key", (err, decode) => {
         if (err) {
 
             return res.json({ Message: "Authentication error." })
@@ -463,23 +479,37 @@ app.get("/showScheduleteacher", (req, res) => {
     // req.email = decode.email
     // console.log("email is",req.email)
     const email = req.val
-    // console.log("email is",tokenEmail)
-    const q = "SELECT * FROM classschedule where studentemail=(?)"
+    console.log("email is",email)
+    const q = "SELECT * FROM classschedule where teacheremail=(?)"
     db.query(q, email, (err, data) => {
         if (err) return res.json(err)
-        // console.log(data)
+        // console.log("data is not yet ")
         return res.json(data)
     })
 })
 
-
-
+//request Class
+app.post("/requestClass",(req,res) => {
+    const q = "INSERT INTO requestclass (`studentemail`,`date`,`description`) VALUES (?)"
+    const values = [
+        req.body.studentemail,
+        req.body.date,
+        req.body.description,
+    ]
+   
+    db.query(q, [values], (err,data) => {
+        if (err) return res.json(err)
+        console.log(err)
+        console.log("Request Data added")
+        return res.json("data has been added")
+    })
+})
 
 // Student schedule
 app.get("/showSchedule", (req, res) => {
     console.log("entered to showSchedule")
     const tokenEmail = req.cookies.studentemail;
-    console.log(tokenEmail);
+    // console.log(tokenEmail);
     jwt.verify(tokenEmail, "our-jsonwebtoken- secrete-key", (err, decode) => {
         if (err) {
 
@@ -515,6 +545,52 @@ app.get("/showAllMeetings", (req, res) => {
 
 
 
+
+
+// upload notes to particular student
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './files')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now()
+        cb(null,
+            uniqueSuffix+
+            file.originalname)
+        }
+    })
+    
+    //   const PdfSchema = mongoose.model("PdfDetails")
+    const upload = multer({ storage: storage })
+    app.post("/noteupload",upload.single('file'),async(req,res)=>{
+        const q = "INSERT INTO subject_notes (teacher_email,student_email,subjec_tname,file_loc) VALUES (?)"
+        console.log("file uploaded")
+        // const title = req.body.title
+        // const name = req.body.name
+        const fileName = req.file.filename
+        const values =[
+            req.body.teacher_email,
+            req.body.student_email,
+            req.body.subjec_tname,
+        ]
+        const file_loc = "http://localhost:9900/files/"+fileName
+        values[3] = file_loc
+        console.log(file_loc)
+        console.log(values)
+    // console.log(name)
+    // res.send('upload successfully')
+    try{
+        // await PdfSchema.create({name:name,email:title,pdf: fileName})
+        // res.send({status:"ok"});
+        db.query(q,[values],(err,data)=>{
+            if(err) return res.json(err)
+            res.send({status:"ok"})
+        })
+    }
+    catch(e){
+        res.json({status:e})
+    }
+})
 
 
 
