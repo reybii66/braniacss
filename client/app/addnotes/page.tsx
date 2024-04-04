@@ -14,33 +14,32 @@ export default function addNotes() {
     const [subject, setSubject] = useState("");
     const [file, setFile] = useState("");
     const [studentemail, setStudEmail] = useState([]);
-    const [TeacherName,setName] = useState('')
-  const [message,setMessage] = useState('')
-  
-  
-  // gettingteacherName
-  useEffect(()=>{
-    console.log("entered in setMessage")
-    axios.get('http://localhost:9900/teachertoken').then(res=>{
-      if(res.data.Status === "Success"){
-        setName(res.data.name)
-      } else {
-        setMessage(res.data.Message)
-      }
-    })
-  },[])
+    const [message, setMessage] = useState('')
+
+
+    // gettingteacherName
+    //   useEffect(()=>{
+    //     console.log("entered in setMessage")
+    //     axios.get('http://localhost:9900/teachertoken').then(res=>{
+    //       if(res.data.Status === "Success"){
+    //         setName(res.data.name)
+    //       } else {
+    //         setMessage(res.data.Message)
+    //       }
+    //     })
+    //   },[])
 
 
 
     // fetchStudentEmail
     useEffect(() => {
-        
+
         console.log("entered in setdata")
         const fetchEmail = async () => {
             try {
                 const res = await axios.get("http://localhost:9900/showStudentEmail")
                 setStudEmail(res.data)
-               
+
             } catch (e) {
                 console.log(e);
             }
@@ -49,9 +48,10 @@ export default function addNotes() {
     }, [])
     const submitFile = async (e: any) => {
         e.preventDefault();
+        console.log("entered in file submit");
         const formData = new FormData();
-        formData.append("studemail", studemail);
-        formData.append("teachemail", teachemail);
+        formData.append("studentemail", studemail);
+        formData.append("teacheremail", teachemail);
         formData.append("subject", subject);
         formData.append("file", file);
         // console.log(file);
@@ -62,19 +62,18 @@ export default function addNotes() {
             });
         console.log(result)
         alert("File Uploaded")
-        window.location.reload();
+        // window.location.reload();
     }
 
     // console.log(email, subject);
     return (
         <>
             <Breadcrumb pageName="Add Notes" />
-            
-            <form onSubmit={submitFile}>
+
+            <form>
 
                 <div className="grid grid-flow-row gap-4 mt-5 max-w-md ">
                     <Input
-                        value={TeacherName}
                         type="Email"
                         name="teacheremail"
                         placeholder="Teacher Email"
@@ -84,8 +83,7 @@ export default function addNotes() {
                         label="Select Student Email"
                         placeholder="Select email"
                         name='studentemail'
-                        // onChange={(e) => setStudEmail(e.target.value)}
-                        
+                        onChange={(e) => setStudentEmail(e.target.value)}
                     >
                         {studentemail.map(email => (
                             <SelectItem
@@ -97,7 +95,7 @@ export default function addNotes() {
                             </SelectItem>
                         ))}
                     </Select>
-                    
+
                     <Input
                         type="text"
                         name="subject"
@@ -115,6 +113,7 @@ export default function addNotes() {
                     <Button
                         type="submit"
                         className="w-20 h-9"
+                        onClick={submitFile}
                         color="primary"
                         variant="bordered">
                         Upload

@@ -23,7 +23,7 @@ export default function TeacherDash(){
     const handleDelete = async (id:any)=>{
         try{
             await axios.delete("http://localhost:9900/deleteuser/"+id)
-            window.location.reload()
+            
         } catch(err){
             console.log(err)
         }

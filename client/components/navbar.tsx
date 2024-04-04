@@ -62,7 +62,7 @@ export const Navbar = () => {
 				<NavbarBrand as="li" className="gap-3 max-w-fit">
 					<NextLink className="flex justify-start items-center gap-1" href="/">
 						{/* <Logo /> */}
-						<p className="font-bold text-inherit font-extrabold-800">Braniacs</p>
+						<p className="font-bold text-inherit font-extrabold-800">Brainiacs</p>
 					</NextLink>
 				</NavbarBrand>
 				<ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -102,15 +102,15 @@ export const Navbar = () => {
 
 				<NavbarItem className="hidden md:flex gap-6">
 					<Button
-						className="text-sm font-normal text-default-600 dark:bg-slate-800 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
-
+						className="text-sm font-normal text-default-600 "
+						color="primary" variant="ghost" radius="full"
 						onClick={() => router.push('/signmodal')}
 					>
 						SignIn
 					</Button>
 					<Button
 						className="text-sm font-normal text-default-600 dark:bg-slate-800 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
-
+						color="primary" variant="ghost" radius="full"
 						onClick={() => router.push('/register')}
 					>
 						SignUp

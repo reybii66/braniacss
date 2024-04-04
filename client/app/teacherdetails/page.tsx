@@ -23,7 +23,7 @@ export default function TeacherDetails(){
     const handleDelete = async (id:any)=>{
         try{
             await axios.delete("http://localhost:9900/deleteteacher/"+id)
-            window.location.reload()
+            
         } catch(err){
             console.log(err)
         }
@@ -32,6 +32,11 @@ export default function TeacherDetails(){
         <>
         {/* <DefaultLayout> */}
         <Breadcrumb pageName="teacher Details"/>
+       
+         <div style={{width:"80%"}}>
+        
+
+
         <Table aria-label="Example static collection table">
       <TableHeader>
         <TableColumn>NAME</TableColumn>
@@ -64,6 +69,7 @@ export default function TeacherDetails(){
           ))} 
       </TableBody>
     </Table>
+          </div>
     {/* </DefaultLayout> */}
         </>
     )

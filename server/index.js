@@ -14,6 +14,9 @@ app.use(cors({
     methods: ["POST, GET", "DELETE"],
     credentials: true
 }));
+app.use("/files",express.static("files"))
+
+
 app.use(express.json());
 app.use(cookieParser());
 // app.use(session({
@@ -312,6 +315,27 @@ const getTeacherName = (req, res, next) => {
 app.get('/teachertoken', getTeacherName, (req, res) => {
     return res.json({ Status: "Success", name: req.name })
 })
+//  teacherEmailtoken
+const getTeacherEmail = (req, res, next) => {
+    const Ttoken = req.cookies.Ttoken;
+
+    if (!Ttoken) {
+        return res.json({ Message: "we need token please. Login now" })
+    } else {
+        jwt.verify(Ttoken, "our-jsonwebtoken- secrete-key", (err, decode) => {
+            if (err) {
+                return res.json({ Message: "Authentication error." })
+            } else {
+                req.email = decode.email;
+                // req.age = decode.age;
+                next();
+            }
+        })
+    }
+}
+app.get('/teacherEmailtoken', getTeacherEmail, (req, res) => {
+    return res.json({ Status: "Success", email: req.email })
+})
 
 
 //teacher login
@@ -448,6 +472,34 @@ app.post("/schedulemeet", (req, res) => {
     })
 })
 
+// Student Notes
+app.get("/notesavailable", (req, res) => {
+    console.log("entered to show Notes")
+    const tokenSEmail = req.cookies.studentemail;
+    // console.log(tokenEmail);
+    jwt.verify(tokenSEmail, "our-jsonwebtoken- secrete-key", (err, decode) => {
+        if (err) {
+
+            return res.json({ Message: "Authentication error" })
+        } else {
+            req.val = decode.val;
+            console.log(req.val)
+            // next();
+        }
+    })
+
+    // req.email = decode.email
+    // console.log("email is",req.email)
+    const email = req.val
+    // console.log("email is",tokenEmail)
+    const q = "SELECT * FROM subject_notes where student_email=(?)"
+    db.query(q, email, (err, data) => {
+        if (err) return res.json(err)
+        // console.log(data)
+        return res.json(data)
+    })
+})
+
 
 
 
@@ -463,7 +515,7 @@ app.get("/showScheduleteacher", (req, res) => {
     // console.log("age",Atoken);
     const token = req.cookies.teacheremail;
 
-    console.log("new token i",token)
+    // console.log("new token i",token)
 
     jwt.verify(Etoken, "our-jsonwebtoken- secrete-key", (err, decode) => {
         if (err) {
@@ -504,6 +556,37 @@ app.post("/requestClass",(req,res) => {
         return res.json("data has been added")
     })
 })
+
+
+
+// show Student request
+app.get("/showStudentRequest",(req,res)=>{
+    // const q = "SELECT iduser, username, useremail, dob,age,contact,gender FROM user"
+    const q = "SELECT * FROM requestclass"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        // console.log(data[2].iduser)
+        return res.json(data)
+    })
+}) 
+
+// delete student request
+app.delete("/deleteRequest/:idrequestclass",(req,res)=>{
+    console.log("entered in rqst delete")
+    const requestid = req.params.requestid
+    const q = "DELETE FROM requestclass where idrequestclass = (?)"
+    // console.log("")
+    db.query(q,requestid,(err,data)=>{
+        if(err) return res.json(err);
+        return res.json("Teacher has been deleted successfully");
+    })
+}) 
+
+
+
+
+
+
 
 // Student schedule
 app.get("/showSchedule", (req, res) => {
@@ -569,9 +652,9 @@ const storage = multer.diskStorage({
         // const name = req.body.name
         const fileName = req.file.filename
         const values =[
-            req.body.teacher_email,
-            req.body.student_email,
-            req.body.subjec_tname,
+            req.body.teacheremail,
+            req.body.studentemail,
+            req.body.subject,
         ]
         const file_loc = "http://localhost:9900/files/"+fileName
         values[3] = file_loc

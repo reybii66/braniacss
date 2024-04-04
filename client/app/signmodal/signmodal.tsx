@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Navbar } from "@/components/navbar";
-
+import "./style.css"
 export default function ModSign() {
   const router = useRouter();
   const [data,setData] = useState({
@@ -42,11 +42,14 @@ console.log(data);
   return (
     
     <>
-    <div className="dark:bg-slate-500">
-    <Navbar/>  
-    </div>
-           
-<div className="min-h-screen bg-white dark:bg-slate-700 py-6 flex flex-col justify-center sm:py-12">
+    <span>< Navbar/></span>
+      
+   
+   
+
+<div 
+id="magicpattern"
+className="min-h-screen bg-white dark:bg-slate-700 py-6 flex flex-col justify-center sm:py-12">
 	<div className="relative py-3 sm:max-w-xl sm:mx-auto">
     
 		<div

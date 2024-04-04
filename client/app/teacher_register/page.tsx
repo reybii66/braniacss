@@ -1,12 +1,14 @@
 "use client"
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Navbar, NavbarItem } from "@nextui-org/navbar";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function teacherRegister(){
-    const router=useRouter();
+    // const router=useRouter();
+    const router=useRouter()
     const [data,setData]=useState({
       fullname:"",
       email:"",
@@ -17,6 +19,9 @@ export default function teacherRegister(){
       subject:"",
       phone:null
   })
+
+
+
   const handleChange = (e:any)=>{
     setData((prev)=>({...prev, [e.target.name]: e.target.value}));
   } ;
@@ -39,16 +44,16 @@ export default function teacherRegister(){
           <Navbar/>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
         <div className="container">
-          <div className="-mx-4 flex flex-wrap">
+          <div className=" -mx-4 flex flex-wrap ">
             <div className="w-full px-4">
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white dark:bg-slate-800 px-6 py-10 dark:bg-dark sm:p-[60px]">
+              <div className="grid grid-cols-2 gap-4 shadow-three mx-auto max-w-[500px] rounded bg-white dark:bg-slate-800 px-6 py-10 dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   Create your account
                 </h3>
                 {/* <p className="mb-11 text-center text-base font-medium text-body-color">
                   It’s totally free and super easy
                 </p> */}
-                <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                {/* <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -83,7 +88,7 @@ export default function teacherRegister(){
                     </svg>
                   </span>
                   Sign in with Google
-                </button>
+                </button> */}
 
                 {/* <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
@@ -102,7 +107,7 @@ export default function teacherRegister(){
                 <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                   <p className="w-full px-5 text-center text-base font-medium text-body-color">
-                    Or, register with your email
+                    Register with your email
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                 </div>
@@ -287,7 +292,7 @@ export default function teacherRegister(){
                 <p className="text-center text-base font-medium text-body-color">
                   Already using Startup?{" "}
                   {/* <ModalSign/> */}
-                  <button className="radius:full text-primary hover:underline" 
+                  <button className="radius:full text-primary hover:underline" onClick={() => router.push('/teacher_login')}
                   
                   >Sign in</button>
                   {/* <Link href="/signmodal/page" className=" text-primary hover:underline">

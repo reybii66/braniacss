@@ -42,9 +42,13 @@ export default function Show_Scheduled_Teacher() {
 
   return (
     <DefaultLayout> 
-    <div className="mx-auto max-w-270">
+    <div className="mx-auto max-w-270 ">
       <Breadcrumb pageName="Scheduled Meet" />
       {/* <h1>{userEmail}</h1> */}
+      <div className="mr-48 "
+      style={{width:"80%"}}>
+
+     
       <Table aria-label="Example static collection table">
         <TableHeader>
           {/* <TableColumn>Session Id</TableColumn> */}
@@ -82,6 +86,7 @@ export default function Show_Scheduled_Teacher() {
           ))}
         </TableBody>
       </Table>
+      </div>
     </div>
     </DefaultLayout>
     

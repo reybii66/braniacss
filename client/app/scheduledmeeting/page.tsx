@@ -39,10 +39,16 @@ export default function VideoConf() {
 
   return (
     // <DefaultLayout>
-    <div className="mx-auto max-w-270">
+    <div className="mx-auto max-w-270" >
       <Breadcrumb pageName="Scheduled Meet" />
       {/* <h1>{userEmail}</h1> */}
-      <Table aria-label="Example static collection table">
+      <div style={{width:"80%"}}>
+
+      <Table 
+      color="default"
+      selectionMode="single" 
+      aria-label="Example static collection table">
+        
         <TableHeader>
           {/* <TableColumn>Session Id</TableColumn> */}
           <TableColumn>Student E-Mail</TableColumn>
@@ -71,7 +77,7 @@ export default function VideoConf() {
                   // isDisabled
                   // className={buttonStyles({ color:"primary", variant: "shadow", radius: "full",  })}
                   href={data.studentlink}
-                >
+                  >
                   Join
                 </Link>
               </TableCell>
@@ -79,6 +85,7 @@ export default function VideoConf() {
           ))}
         </TableBody>
       </Table>
+    </div>
     </div>
 
     //</DefaultLayout>
