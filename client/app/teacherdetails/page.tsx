@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button} from "@nextui-org/react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import { Toast } from "@livekit/components-react";
 // import DefaultLayout from "../userdetails/layout";
 export default function TeacherDetails(){
     const [data,setData] = useState([])
@@ -20,10 +21,10 @@ export default function TeacherDetails(){
         }
         fetchAllData()  
     },[])
-    const handleDelete = async (id:any)=>{
+    const handleDelete = async (teacherid:any)=>{
         try{
-            await axios.delete("http://localhost:9900/deleteteacher/"+id)
-            
+            await axios.delete("http://localhost:9900/deleteteacher/" +teacherid)
+            alert(" deleted successfully");
         } catch(err){
             console.log(err)
         }
@@ -60,10 +61,11 @@ export default function TeacherDetails(){
                 {/* <button className='delete' onClick={()=>handleDelete(books.id)}>Delete</button> */}
               <Button color="danger" onClick={()=>handleDelete(data.teacherid)}>
                 Delete Teacher
-              </Button> &nbsp;&nbsp;
+              </Button> 
+              {/* &nbsp;&nbsp;
               <Button color="warning">
                 Update Teacher
-              </Button> 
+              </Button>  */}
               </TableCell>
         </TableRow>
           ))} 

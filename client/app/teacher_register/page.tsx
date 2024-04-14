@@ -1,14 +1,14 @@
 "use client"
 import React, { useState } from "react";
-// import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Navbar, NavbarItem } from "@nextui-org/navbar";
 import axios from "axios";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 export default function teacherRegister(){
+    const router=useRouter();
     // const router=useRouter();
-    const router=useRouter()
     const [data,setData]=useState({
       fullname:"",
       email:"",
@@ -46,7 +46,7 @@ export default function teacherRegister(){
         <div className="container">
           <div className=" -mx-4 flex flex-wrap ">
             <div className="w-full px-4">
-              <div className="grid grid-cols-2 gap-4 shadow-three mx-auto max-w-[500px] rounded bg-white dark:bg-slate-800 px-6 py-10 dark:bg-dark sm:p-[60px]">
+              <div className=" shadow-three mx-auto max-w-[500px] rounded bg-white dark:bg-slate-800 px-6 py-10 dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   Create your account
                 </h3>
@@ -111,7 +111,10 @@ export default function teacherRegister(){
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form>
+                <div className="">
+
+                
+                    <form>
                   <div className="mb-8">
                     <label
                       className="mb-3 block text-sm text-dark dark:text-white"
@@ -289,6 +292,7 @@ export default function teacherRegister(){
                     </button>
                   </div>
                 </form>
+                </div>
                 <p className="text-center text-base font-medium text-body-color">
                   Already using Startup?{" "}
                   {/* <ModalSign/> */}

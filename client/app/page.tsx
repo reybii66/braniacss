@@ -35,7 +35,7 @@ export default function Home() {
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "cover",
 			}}>
-				<br /><br /><br /><br /><br />
+				<br /><br /><br /><br /><br /><br /><br />
 				<center>
 
 					<div className="justify-center inline-block max-w-lg text-center">
@@ -105,12 +105,12 @@ export default function Home() {
                     className="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-white p-6 rounded-2xl shadow-md shadow-gray-100">
                     <div className="flex gap-5">
                         <div className="font-manrope text-2xl font-bold text-indigo-600">
-                            240%
+                            240+
                         </div>
                         <div className="flex-1">
-                            <h4 className="text-xl text-gray-900 font-semibold mb-2">Company growth</h4>
-                            <p className="text-xs text-gray-500 leading-5">Company's remarkable growth journey as we
-                                continually innovate and drive towards new heights of success.</p>
+                            <h4 className="text-xl text-gray-900 font-semibold mb-2">Number of Students</h4>
+                            <p className="text-xs text-gray-500 leading-5">Brainiacs has  
+							Providing personalized academic support and fostering collaborative learning.</p>
                         </div>
                     </div>
                 </div>
@@ -118,11 +118,11 @@ export default function Home() {
                     className="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-white p-6 rounded-2xl shadow-md shadow-gray-100">
                     <div className="flex gap-5">
                         <div className="font-manrope text-2xl font-bold text-indigo-600">
-                            175+
+                            50+
                         </div>
                         <div className="flex-1">
-                            <h4 className="text-xl text-gray-900 font-semibold mb-2">Company growth</h4>
-                            <p className="text-xs text-gray-500 leading-5">Our very talented team members are the powerhouse
+                            <h4 className="text-xl text-gray-900 font-semibold mb-2">Experienced Tutors</h4>
+                            <p className="text-xs text-gray-500 leading-5">Our very talented tutors are the powerhouse
                                 of pagedone and pillars of our success. </p>
                         </div>
                     </div>
@@ -131,11 +131,11 @@ export default function Home() {
                     className="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-white p-6 rounded-2xl shadow-md shadow-gray-100">
                     <div className="flex gap-5">
                         <div className="font-manrope text-2xl font-bold text-indigo-600">
-                            625+
+                           4.5
                         </div>
                         <div className="flex-1">
-                            <h4 className="text-xl text-gray-900 font-semibold mb-2">Projects Completed</h4>
-                            <p className="text-xs text-gray-500 leading-5">We have accomplished more than 625 projects
+                            <h4 className="text-xl text-gray-900 font-semibold mb-2">Over-All Review</h4>
+                            <p className="text-xs text-gray-500 leading-5">We have to spread
                                 worldwide and we are still counting many more.</p>
                         </div>
                     </div>
@@ -163,7 +163,7 @@ export default function Home() {
 						</div>
 
 						<div className="px-5 py-2">
-							<a href="#" className="text-base leading-6 text-gray-500 hover:text-black">
+							<a href="/contact" className="text-base leading-6 text-gray-500 hover:text-black">
 								Contact
 							</a>
 						</div>

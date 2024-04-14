@@ -174,23 +174,27 @@ app.get("/showTeachersDetails", (req, res) => {
 
 
 //delete studentdetails
-app.delete("/deletestudent/:idstudent", (req, res) => {
+app.delete("/deletestudent/:studentid", (req, res) => {
     // console.log("entered in server delete")
-    const iduser = req.params.iduser
+    const iduser = req.params.studentid
     const q = "DELETE FROM student where studentid = (?)"
     // console.log("")
     db.query(q, iduser, (err, data) => {
+        
         if (err) return res.json(err);
         return res.json("user has been deleted successfully");
+        
     })
 })
 //delete teacherdetails
-app.delete("/deleteteacher/:idteacher", (req, res) => {
-    // console.log("entered in server delete")
-    const iduser = req.params.iduser
+app.delete("/deleteteacher/:teacherid", (req, res) => {
+    console.log("entered in server delete")
+    const iduser = req.params.teacherid
     const q = "DELETE FROM teacher where teacherid = (?)"
     // console.log("")
     db.query(q, iduser, (err, data) => {
+        console.log("worked")
+        
         if (err) return res.json(err);
         return res.json("Teacher has been deleted successfully");
     })
@@ -270,7 +274,23 @@ app.post("/studentregister", (req, res) => {
     })
 })
 
-
+//student register
+app.post("/contact", (req, res) => {
+    console.log("student data entered")
+    const q = "INSERT INTO contact (`email`,`subject`,`message`) VALUES (?)"
+    const values = [
+        req.body.email,
+        req.body.subject,
+        req.body.message,
+    
+    ]
+    console.log("data is", values)
+    db.query(q, [values], (err, data) => {
+        if (err) return res.json(err)
+        else
+        return res.json("data has been added")
+    })
+})
 
 
 
@@ -573,12 +593,13 @@ app.get("/showStudentRequest",(req,res)=>{
 // delete student request
 app.delete("/deleteRequest/:idrequestclass",(req,res)=>{
     console.log("entered in rqst delete")
-    const requestid = req.params.requestid
+    const requestid = req.params.idrequestclass
     const q = "DELETE FROM requestclass where idrequestclass = (?)"
-    // console.log("")
+    
     db.query(q,requestid,(err,data)=>{
-        if(err) return res.json(err);
-        return res.json("Teacher has been deleted successfully");
+        console.log("works")
+        if(err) return res.json("err");
+        return res.json("Request for class has been deleted successfully");
     })
 }) 
 
